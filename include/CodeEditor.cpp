@@ -304,18 +304,15 @@ void CodeEditor::mouseWheel( app::MouseEvent event )
 
 void CodeEditor::keyDown( ci::app::KeyEvent event )
 {
-    // Toggle Visibility
-    
-    if( event.getChar() == '~' ){
+	// Toggle Visibility   
+	if (event.getChar() == '~'){
         setVisible( !isVisible() );
         return;
     }
     
     if( !mVisible || !mCurrentTab ) return;
-    
-    
+        
     // Save file
-    
     if( event.isAccelDown() && event.getCode() == ci::app::KeyEvent::KEY_s ){
         mCurrentTab->write( mCurrentTab->mFilePath );
     }
@@ -361,7 +358,47 @@ void CodeEditor::keyDown( ci::app::KeyEvent event )
             setTheme( "dark" );
         else setTheme( "light" );
     }
-    // Other keys
+	// Alt Down
+	else if (event.isAltDown()){
+		switch (event.getCode())
+		{
+		case ci::app::KeyEvent::KEY_n:
+			enableLineNumbers();
+			break;
+		case ci::app::KeyEvent::KEY_w:
+			enableLineWrapping(false);
+			break;
+		case ci::app::KeyEvent::KEY_h:
+			hide();
+			break;
+		case ci::app::KeyEvent::KEY_s:
+			show();
+			break;
+		case ci::app::KeyEvent::KEY_1:
+			if (mSettings.getOpacity() < 1.0) setOpacity(mSettings.getOpacity() + 0.1);
+			break;
+		case ci::app::KeyEvent::KEY_2:
+			if (mSettings.getOpacity() > 0.0) setOpacity(mSettings.getOpacity() - 0.1);
+			break;
+		case ci::app::KeyEvent::KEY_3:
+			setFontSize(11);
+			break;
+		case ci::app::KeyEvent::KEY_4:
+			setFontSize(14);			
+			break;
+		case ci::app::KeyEvent::KEY_5:
+			setFontSize(16);			
+			break;
+		case ci::app::KeyEvent::KEY_6:
+			mCurrentTab->mWebView.get()->Focus();
+			//mCurrentTab->mWebView.get()->InjectKeyboardEvent(toKeyEvent(event, Awesomium::WebKeyboardEvent::kTypeKeyDown));
+			//mCurrentTab->mWebView.get()->InjectKeyboardEvent(toKeyChar(event));
+			break;
+		default:
+			ph::awesomium::handleKeyDown( mCurrentTab->mWebView.get(), event );
+			break;
+		}
+    }    // Other keys
     else {
         ph::awesomium::handleKeyDown( mCurrentTab->mWebView.get(), event );
     }

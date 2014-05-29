@@ -23,7 +23,8 @@ typedef std::shared_ptr< class CodeEditor > CodeEditorRef;
 
 class CodeEditor {
 public:
-    
+	ci::gl::Texture             mWebTexture;
+
     struct Settings {
     public:
         Settings()
@@ -152,6 +153,7 @@ public:
     
     void registerCodeChanged( const std::string& fileName, std::function<void(const std::string&)> fn );
     void registerCodeChanged( const std::string& firstFileName, const std::string& secondFileName, std::function<void(const std::string&,const std::string&)> fn );
+    void connectWindow( ci::app::WindowRef window );
     
 protected:
     
@@ -163,7 +165,6 @@ protected:
 #endif
     
     void setup();
-    void connectWindow( ci::app::WindowRef window );
     void initTabs();
     void initAwesomium();
     
@@ -223,6 +224,5 @@ protected:
     std::vector<TabRef>         mTabs;
     int                         mTabsReady;
     
-    ci::gl::Texture             mWebTexture;
     bool                        mVisible;
 };
