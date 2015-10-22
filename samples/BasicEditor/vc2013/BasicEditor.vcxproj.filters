@@ -1,3 +1,4 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
 <Project ToolsVersion="4.0" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
   <ItemGroup>
     <Filter Include="Source Files">
@@ -27,6 +28,15 @@
     <Filter Include="Blocks\CodeEditor\include">
       <UniqueIdentifier>{F7038D16-6314-48BC-B544-12D894F01F1C}</UniqueIdentifier>
     </Filter>
+    <Filter Include="Blocks\Awesomium\src">
+      <UniqueIdentifier>{65bdb6c2-34e8-4984-8bbc-dc06a4177198}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="assets">
+      <UniqueIdentifier>{d3e4d07c-1287-45e3-909c-34945e513aa0}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="assets\shaders">
+      <UniqueIdentifier>{8b7ac693-106a-4b8c-9a58-8c94151a5302}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="..\src\BasicEditorApp.cpp">
@@ -47,6 +57,9 @@
     <ClInclude Include="..\..\..\include\CodeEditor.h">
       <Filter>Blocks\CodeEditor\include</Filter>
     </ClInclude>
+    <ClCompile Include="..\..\..\..\Cinder-Awesomium\src\CinderAwesomium.cpp">
+      <Filter>Blocks\Awesomium\src</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="..\include\Resources.h">
@@ -57,5 +70,10 @@
     <ResourceCompile Include="Resources.rc">
       <Filter>Resource Files</Filter>
     </ResourceCompile>
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="..\assets\shaders\simple.frag">
+      <Filter>assets\shaders</Filter>
+    </None>
   </ItemGroup>
 </Project>

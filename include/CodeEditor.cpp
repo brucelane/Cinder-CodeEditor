@@ -236,6 +236,8 @@ void CodeEditor::update()
 			try {
                 gl::Texture::Format fmt;
                 fmt.setMagFilter( GL_LINEAR );
+				fmt.loadTopDown(true);
+
                 mWebTexture = ph::awesomium::toTexture( mCurrentTab->mWebView.get(), fmt );
             }
             catch( const std::exception &e ) { cout << e.what() << std::endl; }

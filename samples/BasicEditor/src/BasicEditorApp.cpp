@@ -14,19 +14,22 @@ class BasicEditorApp : public App {
 	void setup();
 	void draw();
     
-    gl::GlslProgRef mShader;
+	// default vertex shader
+	std::string		vert;
+	gl::GlslProgRef mShader;
     CodeEditorRef   mCodeEditor;
 };
 
 void BasicEditorApp::setup()
 {
-    
+	vert = loadString(loadAsset("shaders/simple.vert"));
+
     // Create CodeEditor
     mCodeEditor = CodeEditor::create( "shaders/simple.frag" );
     
     mCodeEditor->registerCodeChanged( "shaders/simple.frag", [this](const string& frag) {
         try {
-            mShader = gl::GlslProg::create( NULL, frag.c_str() );
+			mShader = gl::GlslProg::create( vert.c_str(), frag.c_str());
             mCodeEditor->clearErrors();
         }
         catch( gl::GlslProgCompileExc exc ) {

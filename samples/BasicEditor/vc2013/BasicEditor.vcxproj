@@ -169,6 +169,7 @@
     <ResourceCompile Include="Resources.rc" />
   </ItemGroup>
   <ItemGroup>
+    <ClCompile Include="..\..\..\..\Cinder-Awesomium\src\CinderAwesomium.cpp" />
     <ClCompile Include="..\src\BasicEditorApp.cpp" />
     <ClCompile Include="..\..\..\include\CodeEditor.cpp" />
   </ItemGroup>
@@ -176,6 +177,9 @@
     <ClInclude Include="..\include\Resources.h" />
     <ClInclude Include="..\..\..\..\Cinder-Awesomium\include\CinderAwesomium.h" />
     <ClInclude Include="..\..\..\include\CodeEditor.h" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="..\assets\shaders\simple.frag" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
   <ImportGroup Label="ExtensionTargets" />

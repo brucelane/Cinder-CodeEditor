@@ -169,6 +169,7 @@
     <ResourceCompile Include="Resources.rc" />
   </ItemGroup>
   <ItemGroup>
+    <ClCompile Include="..\..\..\..\Cinder-Awesomium\src\CinderAwesomium.cpp" />
     <ClCompile Include="..\src\MultiWindowApp.cpp" />
     <ClCompile Include="..\..\..\include\CodeEditor.cpp" />
   </ItemGroup>

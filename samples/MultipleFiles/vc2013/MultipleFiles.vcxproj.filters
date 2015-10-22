@@ -1,3 +1,4 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
 <Project ToolsVersion="4.0" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
   <ItemGroup>
     <Filter Include="Source Files">
@@ -27,6 +28,12 @@
     <Filter Include="Blocks\CodeEditor\include">
       <UniqueIdentifier>{E330D573-D0FC-4029-85C1-7E2CC7CABC1F}</UniqueIdentifier>
     </Filter>
+    <Filter Include="Blocks\Awesomium\src">
+      <UniqueIdentifier>{bae446e5-398d-4d6b-86e4-b457e30decf3}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="assets">
+      <UniqueIdentifier>{a221c4bd-9441-4f40-ab02-69ffb73e21b9}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="..\src\MultipleFilesApp.cpp">
@@ -47,6 +54,9 @@
     <ClInclude Include="..\..\..\include\CodeEditor.h">
       <Filter>Blocks\CodeEditor\include</Filter>
     </ClInclude>
+    <ClCompile Include="..\..\..\..\Cinder-Awesomium\src\CinderAwesomium.cpp">
+      <Filter>Blocks\Awesomium\src</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="..\include\Resources.h">
@@ -57,5 +67,13 @@
     <ResourceCompile Include="Resources.rc">
       <Filter>Resource Files</Filter>
     </ResourceCompile>
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="..\assets\SphereShader.frag">
+      <Filter>assets</Filter>
+    </None>
+    <None Include="..\assets\SphereShader.vert">
+      <Filter>assets</Filter>
+    </None>
   </ItemGroup>
 </Project>

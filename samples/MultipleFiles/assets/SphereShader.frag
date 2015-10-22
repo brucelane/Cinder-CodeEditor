@@ -1,3 +1,16 @@
-void main(){
-  gl_FragColor = vec4( 0.3, 0.6, 0.8, 1.0 );
+// uniform sampler2D uSampler;
+
+in Vertex
+{
+	vec2 	uv;
+} vertex;
+
+out vec4 oColor;
+
+void main( void )
+{
+	vec4 color 	= vec4( 0.9, 0.6, 0.8, 1.0 );
+//	color 	= vec4( texture( uSampler, vertex.uv ).xyz, 1.0 );
+
+	oColor 		= color;
 }
