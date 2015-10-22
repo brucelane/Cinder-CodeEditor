@@ -1,4 +1,5 @@
-#include "cinder/app/AppNative.h"
+#include "cinder/app/App.h"
+#include "cinder/app/RendererGl.h"
 #include "cinder/gl/gl.h"
 #include "cinder/gl/GlslProg.h"
 
@@ -16,13 +17,13 @@ using namespace ci;
 using namespace ci::app;
 using namespace std;
 
-class MultiWindowApp : public AppNative {
+class MultiWindowApp : public App {
   public:
 	void setup();
 	void drawMain();
     void keyDown( KeyEvent event );
     
-    gl::GlslProg    mShader;
+    gl::GlslProgRef mShader;
     CodeEditorRef   mCodeEditor;
 };
 
@@ -31,10 +32,10 @@ void MultiWindowApp::setup()
     // Create secondary window
     WindowRef editorWindow = createWindow( Window::Format().size( 500, 180 ) );
     editorWindow->getSignalDraw().connect( [this](){ gl::clear( ColorA::gray( 0.85f ) ); } );
-    editorWindow->setPos( getWindowIndex(0)->getPos() - Vec2i( 510, 0 ) );
-    
+    editorWindow->setPos( getWindowIndex(0)->getPos() - ivec2( 510, 0 ) );
+
     // Connect main draw to main window
-    getWindowIndex(0)->connectDraw( &MultiWindowApp::drawMain, this );
+	getWindowIndex(0)->getSignalDraw().connect(std::bind(&MultiWindowApp::drawMain, this));
     
     // Create CodeEditor
 #if defined( CINDER_MSW )
@@ -45,7 +46,7 @@ void MultiWindowApp::setup()
     
     mCodeEditor->registerCodeChanged( "SphereShader.vert", "SphereShader.frag", [this](const string& vert,const string& frag) {
         try {
-            mShader = gl::GlslProg( vert.c_str(), frag.c_str() );
+            mShader = gl::GlslProg::create( vert.c_str(), frag.c_str() );
             mCodeEditor->clearErrors();
         }
         catch( gl::GlslProgCompileExc exc ) {
@@ -62,9 +63,8 @@ void MultiWindowApp::drawMain()
         gl::enableAlphaBlending();
         gl::enableWireframe();
         
-        mShader.bind();
-        gl::drawSphere( Vec3f( getWindowCenter().x, getWindowCenter().y, 0.0f ), 150.0f );
-        mShader.unbind();
+        mShader->bind();
+        gl::drawSphere( vec3( getWindowCenter().x, getWindowCenter().y, 0.0f ), 150.0f );
         
         gl::disableWireframe();
 		gl::disableAlphaBlending();
@@ -80,4 +80,4 @@ void MultiWindowApp::keyDown( KeyEvent event )
     }
 }
 
-CINDER_APP_NATIVE( MultiWindowApp, RendererGl )
+CINDER_APP( MultiWindowApp, RendererGl )

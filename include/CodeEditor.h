@@ -8,7 +8,9 @@
 
 #pragma once
 
-#include "cinder/app/AppNative.h"
+#include "cinder/app/App.h"
+#include "cinder/app/RendererGl.h"
+#include "cinder/gl/gl.h"
 #include "cinder/gl/Texture.h"
 #include "cinder/Utilities.h"
 #include "cinder/DataTarget.h"
@@ -23,7 +25,7 @@ typedef std::shared_ptr< class CodeEditor > CodeEditorRef;
 
 class CodeEditor {
 public:
-	ci::gl::Texture             mWebTexture;
+	ci::gl::TextureRef           mWebTexture;
 
     struct Settings {
     public:

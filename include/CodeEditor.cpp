@@ -144,23 +144,26 @@ void CodeEditor::setup()
 }
 void CodeEditor::connectWindow( app::WindowRef window )
 {
-    if( mSettings.isUpdateConnectionEnabled() )
+	//std::bind(&CodeEditor::update, this, std::placeholders::_1);
+	//window->getSignalMouseDown().connect(mouseDown),
+
+	if( mSettings.isUpdateConnectionEnabled() )
         app::App::get()->getSignalUpdate().connect( std::bind( &CodeEditor::update, this ) );
 
-    app::App::get()->getSignalShutdown().connect( std::bind( &CodeEditor::shutdown, this ) );
+    app::App::get()->getSignalCleanup().connect( std::bind( &CodeEditor::shutdown, this ) );
     
     if( mSettings.isPostDrawConnectionEnabled() )
         window->getSignalPostDraw().connect( std::bind( &CodeEditor::draw, this ) );
     
-    window->connectKeyDown( &CodeEditor::keyDown, this );
-    window->connectKeyUp( &CodeEditor::keyUp, this );
-    window->connectMouseMove( &CodeEditor::mouseMove, this );
-    window->connectMouseDown( &CodeEditor::mouseDown, this );
-    window->connectMouseDrag( &CodeEditor::mouseDrag, this );
-    window->connectMouseUp( &CodeEditor::mouseUp, this );
-    window->connectMouseWheel( &CodeEditor::mouseWheel, this );
-    window->connectFileDrop( &CodeEditor::fileDrop, this );
-    window->connectResize( &CodeEditor::resize, this );
+    window->getSignalKeyDown().connect( std::bind( &CodeEditor::keyDown, this, std::placeholders::_1 ) );
+	window->getSignalKeyUp().connect(std::bind(&CodeEditor::keyUp, this, std::placeholders::_1));
+	window->getSignalMouseMove().connect(std::bind(&CodeEditor::mouseMove, this, std::placeholders::_1));
+	window->getSignalMouseDown().connect(std::bind(&CodeEditor::mouseDown, this, std::placeholders::_1));
+	window->getSignalMouseDrag().connect(std::bind(&CodeEditor::mouseDrag, this, std::placeholders::_1));
+	window->getSignalMouseUp().connect(std::bind(&CodeEditor::mouseUp, this, std::placeholders::_1));
+	window->getSignalMouseWheel().connect(std::bind(&CodeEditor::mouseWheel, this, std::placeholders::_1));
+	window->getSignalFileDrop().connect(std::bind(&CodeEditor::fileDrop, this, std::placeholders::_1));
+	window->getSignalResize().connect(std::bind(&CodeEditor::resize, this));
 }
 void CodeEditor::initTabs()
 {
@@ -230,7 +233,7 @@ void CodeEditor::update()
     if( mCurrentTab && mCurrentTab->mWebView ){
         if( ! mCurrentTab->mWebView->IsLoading() && ph::awesomium::isDirty( mCurrentTab->mWebView.get() ) )
         {
-            try {
+			try {
                 gl::Texture::Format fmt;
                 fmt.setMagFilter( GL_LINEAR );
                 mWebTexture = ph::awesomium::toTexture( mCurrentTab->mWebView.get(), fmt );

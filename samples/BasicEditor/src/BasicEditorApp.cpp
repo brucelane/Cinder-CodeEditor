@@ -1,4 +1,5 @@
-#include "cinder/app/AppNative.h"
+#include "cinder/app/App.h"
+#include "cinder/app/RendererGl.h"
 #include "cinder/gl/gl.h"
 #include "cinder/gl/GlslProg.h"
 
@@ -8,12 +9,12 @@ using namespace ci;
 using namespace ci::app;
 using namespace std;
 
-class BasicEditorApp : public AppNative {
+class BasicEditorApp : public App {
   public:
 	void setup();
 	void draw();
     
-    gl::GlslProg    mShader;
+    gl::GlslProgRef mShader;
     CodeEditorRef   mCodeEditor;
 };
 
@@ -25,7 +26,7 @@ void BasicEditorApp::setup()
     
     mCodeEditor->registerCodeChanged( "shaders/simple.frag", [this](const string& frag) {
         try {
-            mShader = gl::GlslProg( NULL, frag.c_str() );
+            mShader = gl::GlslProg::create( NULL, frag.c_str() );
             mCodeEditor->clearErrors();
         }
         catch( gl::GlslProgCompileExc exc ) {
@@ -43,11 +44,10 @@ void BasicEditorApp::draw()
     
     if( mShader ){
         gl::enableAlphaBlending();
-        mShader.bind();
+        mShader->bind();
         gl::drawSolidRect( getWindowBounds() );
-        mShader.unbind();
 		gl::disableAlphaBlending();
     }
 }
 
-CINDER_APP_NATIVE( BasicEditorApp, RendererGl )
+CINDER_APP( BasicEditorApp, RendererGl )
