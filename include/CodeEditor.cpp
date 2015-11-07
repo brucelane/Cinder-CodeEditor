@@ -193,7 +193,7 @@ void CodeEditor::initAwesomium()
         TabRef tab = *it;
         
         // create a webview
-        WebViewRef webView = WebViewRef( mWebCorePtr->CreateWebView( app::getWindowWidth(), app::getWindowHeight() ), mem_fn( &Awesomium::WebView::Destroy ) );
+        WebViewRef webView = WebViewRef( mWebCorePtr->CreateWebView( app::getWindowWidth(), app::getWindowHeight()/2 ), mem_fn( &Awesomium::WebView::Destroy ) );
         
         webView->LoadURL( Awesomium::WebURL( Awesomium::WSLit( ( "file://" + editorPath ).c_str() ) ) );
         
@@ -269,7 +269,7 @@ void CodeEditor::shutdown()
 void CodeEditor::resize()
 {
 	if( mCurrentTab )
-		mCurrentTab->mWebView->Resize( app::getWindowWidth(), app::getWindowHeight() );
+		mCurrentTab->mWebView->Resize( app::getWindowWidth(), app::getWindowHeight()/2 );
 }
 
 void CodeEditor::mouseMove( app::MouseEvent event )
